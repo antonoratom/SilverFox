@@ -1,10 +1,10 @@
 console.clear();
 /* The encoding is super important here to enable frame-by-frame scrubbing. */
 
-// ffmpeg -i ~/Downloads/Toshiba\ video/original.mov -movflags faststart -vcodec libx264 -crf 23 -g 1 -pix_fmt yuv420p output.mp4
-// ffmpeg -i ~/Downloads/Toshiba\ video/original.mov -vf scale=960:-1 -movflags faststart -vcodec libx264 -crf 20 -g 1 -pix_fmt yuv420p output_960.mp4
+// ffmpeg commands omitted for brevity
 
 const video = document.querySelector(".video-background");
+const stickyElement = document.querySelector(".hero-sticky_fg-2"); // Select the sticky element
 let src = video.currentSrc || video.src;
 console.log(video, src);
 
@@ -31,14 +31,16 @@ gsap.registerPlugin(ScrollTrigger);
 let tl = gsap.timeline({
   defaults: { duration: 1 },
   scrollTrigger: {
-    trigger: ".video-wrap",
+    trigger: ".hero-sticky_wrap",
     start: "top top",
     end: "bottom bottom",
     scrub: true,
+    // markers: true,
   },
 });
 
 once(video, "loadedmetadata", () => {
+  // Animate video playback
   tl.fromTo(
     video,
     {
@@ -48,9 +50,23 @@ once(video, "loadedmetadata", () => {
       currentTime: video.duration || 1,
     }
   );
+
+  // Animate the width of the sticky element from its initial width to 0%
+  tl.to(
+    stickyElement,
+
+    {
+      // width: "0%", // Animate to 0%
+      marginLeft: "-100%",
+      // opacity: "0",
+      ease: "power2.inOut", // Optional easing function
+      duration: 0.75,
+    },
+    0 // Start this animation at the same time as the video animation
+  );
 });
 
-/* When first coded, the Blobbing was important to ensure the browser wasn't dropping previously played segments, but it doesn't seem to be a problem now. Possibly based on memory availability? */
+/* Fetch and set video source logic */
 setTimeout(function () {
   if (window["fetch"]) {
     fetch(src)

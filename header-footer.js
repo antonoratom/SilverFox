@@ -57,7 +57,7 @@ $("[light-section]").each(function () {
       trigger: $(this),
       start: "top 24px",
       end: "bottom 24px",
-      markers: true,
+      //markers: true,
       onEnter: addLightClass,
       onLeave: removeLightClass,
       onEnterBack: addLightClass,
