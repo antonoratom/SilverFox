@@ -1,4 +1,5 @@
 const headerCtaWrap = document.querySelector(".header-main-cta_wrap");
+headerCtaWrap.style.maxWidth = "0%";
 
 window.addEventListener("scroll", () => {
   // Check if the screen width is greater than 991 pixels

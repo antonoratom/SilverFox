@@ -129,7 +129,7 @@ let pathTl = gsap.timeline({
     start: "15% 70%",
     end: "130% 70%",
     scrub: true,
-    markers: true, // Show markers for debugging
+    // markers: true,
   },
 });
 
