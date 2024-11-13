@@ -1,4 +1,4 @@
-console.clear();
+// console.clear();
 /* The encoding is super important here to enable frame-by-frame scrubbing. */
 
 // ffmpeg commands omitted for brevity

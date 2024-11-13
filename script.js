@@ -1,34 +1,24 @@
-//LOGO RANDOMIZER
-
+// LOGO RANDOMIZER
 document.addEventListener("DOMContentLoaded", () => {
-  // Select all images with the specified class
   const images = Array.from(
     document.querySelectorAll(".home-hero-logos_cli img")
   );
-
-  // Select all hero grid items
   const gridItems = Array.from(document.querySelectorAll(".hero-grid-item"));
 
-  // Check if there are enough images for the grid items
   const numberOfImagesToUse = Math.min(images.length, gridItems.length);
-
-  // Shuffle the images array
   const shuffledImages = shuffleArray(images);
 
-  // Assign images to grid items
   for (let i = 0; i < numberOfImagesToUse; i++) {
     const gridItem = gridItems[i];
     const image = shuffledImages[i];
 
-    // Create a new image element
     const imgElement = document.createElement("img");
-    imgElement.src = image.src; // Use the source of the shuffled image
+    imgElement.src = image.src;
     imgElement.setAttribute(
       "data-unique-number",
       image.getAttribute("data-unique-number")
-    ); // Retain the unique number if needed
+    );
 
-    // Append the image to the grid item
     gridItem.appendChild(imgElement);
   }
 
@@ -38,22 +28,17 @@ document.addEventListener("DOMContentLoaded", () => {
     const gridItem = gridItems[randomIndex];
     const currentImage = gridItem.querySelector("img");
 
-    // If there is an image in the grid item, fade it out
     if (currentImage) {
       currentImage.classList.add("fade-out");
 
-      // Wait for the fade-out transition to complete before replacing the image
       setTimeout(() => {
-        // Remove the current image
         gridItem.removeChild(currentImage);
 
-        // Select a new random image from the shuffled images
         const newImage = getRandomImage(
           shuffledImages,
           currentImage.getAttribute("data-unique-number")
         );
 
-        // Create and append the new image
         const newImgElement = document.createElement("img");
         newImgElement.src = newImage.src;
         newImgElement.setAttribute(
@@ -61,16 +46,16 @@ document.addEventListener("DOMContentLoaded", () => {
           newImage.getAttribute("data-unique-number")
         );
         gridItem.appendChild(newImgElement);
-      }, 500); // Match this duration with the CSS transition duration
+      }, 500);
     }
-  }, 3000); // Update every 3 seconds
+  }, 3000);
 });
 
 // Function to shuffle an array
 function shuffleArray(array) {
   for (let i = array.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
-    [array[i], array[j]] = [array[j], array[i]]; // Swap elements
+    [array[i], array[j]] = [array[j], array[i]];
   }
   return array;
 }
@@ -83,34 +68,261 @@ function getRandomImage(images, currentUniqueNumber) {
   } while (newImage.getAttribute("data-unique-number") === currentUniqueNumber);
   return newImage;
 }
-//—————————————————————
-//END OF LOGO RANDOMIZER
+// —————————————————————
+// END OF LOGO RANDOMIZER
 
-console.clear();
-// Ensure you have GSAP and ScrollTrigger loaded
 gsap.registerPlugin(ScrollTrigger);
 
 let path = document.getElementById("trimPath");
-let l = path.getTotalLength();
+let firstDot = document.getElementById("firstDot");
+let firstDotShadow = document.getElementById("firstDotShadow");
+let firstDotH = document.querySelector("#firstDotText h5");
+let firstDotP = document.querySelector("#firstDotText p");
+
+let secondDot = document.getElementById("secondDot");
+let secondDotShadow = document.getElementById("secondDotShadow");
+let secondDotH = document.querySelector("#secondDotText h5");
+let secondDotP = document.querySelector("#secondDotText p");
+
+let thirdDot = document.getElementById("thirdDot");
+let thirdDotShadow = document.getElementById("thirdDotShadow");
+let thirdDotH = document.querySelector("#thirdDotText h5");
+let thirdDotP = document.querySelector("#thirdDotText p");
+
+let fourthDot = document.getElementById("fourthDot");
+let fourthDotShadow = document.getElementById("fourthDotShadow");
+let fourthDotH = document.querySelector("#fourthDotText h5");
+let fourthDotP = document.querySelector("#fourthDotText p");
+
+let fifthDot = document.getElementById("fifthDot");
+let fifthDotShadow = document.getElementById("fifthDotShadow");
+let fifthDotH = document.querySelector("#fifthDotText h5");
+let fifthDotP = document.querySelector("#fifthDotText p");
+let totalLength = path.getTotalLength(); // Get the total length of the path
 
 // Set the initial strokeDasharray
-TweenMax.set(path, { strokeDasharray: l });
+gsap.set(path, { strokeDasharray: totalLength });
+
+// Define common active and inactive animation states
+const activeAnimation = {
+  fill: "var(--colors-all--additional)",
+  shadowRadius: 12,
+  shadowOpacity: 0.25,
+  hOpacity: 1,
+  pOpacity: 0.6,
+  pHeight: "auto",
+};
+
+const inactiveAnimation = {
+  fill: "#AAAEB2",
+  shadowRadius: 6,
+  shadowOpacity: 0,
+  hOpacity: 0.25,
+  pOpacity: 0,
+  pHeight: "0px",
+};
 
 // Create a GSAP timeline for the animation
 let pathTl = gsap.timeline({
   scrollTrigger: {
-    trigger: ".scrubbing-path_wrap", // The element that triggers the scroll
-    start: "top 70%", // Start when the top of the trigger hits the top of the viewport
-    end: "150% 70%", // Adjust this value based on how far you want the scroll to go
-    scrub: true, // Enable scrubbing
-    // pin: true, // Optional: pins the trigger element during the scroll
-    // markers: true,
+    trigger: ".scrubbing-path_wrap",
+    start: "15% 70%",
+    end: "130% 70%",
+    scrub: true,
+    markers: true, // Show markers for debugging
   },
 });
+
+// Define your threshold values and corresponding pathWraps
+const thresholds = [
+  { value: -3239, elements: [firstDot, firstDotShadow, firstDotH, firstDotP] },
+  {
+    value: -2770,
+    elements: [secondDot, secondDotShadow, secondDotH, secondDotP],
+  },
+  { value: -2287, elements: [thirdDot, thirdDotShadow, thirdDotH, thirdDotP] },
+  {
+    value: -994,
+    elements: [fourthDot, fourthDotShadow, fourthDotH, fourthDotP],
+  },
+  { value: -443, elements: [fifthDot, fifthDotShadow, fifthDotH, fifthDotP] },
+];
 
 // Animate the path with reversed direction
 pathTl.fromTo(
   path,
-  { strokeDashoffset: -l },
-  { strokeDashoffset: 0, duration: 3 }
+  { strokeDashoffset: -totalLength },
+  {
+    strokeDashoffset: 0,
+    duration: 3,
+    onUpdate: function () {
+      let currentOffset = gsap.getProperty(path, "strokeDashoffset");
+      // Function to trigger animations
+      function triggerAnimations(elements, isActive) {
+        const animation = isActive ? activeAnimation : inactiveAnimation;
+
+        gsap.to(elements[0], {
+          fill: animation.fill,
+          duration: 0.3,
+        });
+        gsap.to(elements[1], {
+          attr: { r: animation.shadowRadius },
+          opacity: animation.shadowOpacity,
+          duration: 0.3,
+        });
+        gsap.to(elements[2], {
+          opacity: animation.hOpacity,
+          duration: 0.3,
+        });
+        gsap.to(elements[3], {
+          opacity: animation.pOpacity,
+          height: animation.pHeight,
+          duration: 0.6,
+        });
+      }
+
+      // Loop through the thresholds to determine which animations to trigger
+      thresholds.forEach((threshold) => {
+        const isActive = currentOffset >= threshold.value;
+        // Trigger animations for the corresponding pathWrap
+        triggerAnimations(threshold.elements, isActive);
+      });
+    },
+  }
 );
+
+//AUTOROTATE TABS
+const init = () => {
+  console.log("init function called");
+
+  const ACTIVE_TAB = "w--current";
+  let activeIndex = 0;
+  let timeout;
+  let tween;
+
+  // Select the node that will be observed for mutations
+  const tabsComponent = document.querySelector('[wb-data="tabs"]');
+  if (!tabsComponent) return;
+
+  const tabsMenu = tabsComponent.querySelector('[wb-data="menu"]');
+  if (!tabsMenu) return;
+
+  const loaders = tabsMenu.querySelectorAll(".tabs-line_path-fg");
+
+  // Fix for Safari scrolling to tab on focus
+  if (navigator.userAgent.includes("Safari")) {
+    let tabLinks = tabsMenu.childNodes;
+    tabLinks.forEach((tabLink) => {
+      tabLink.focus = function () {
+        const x = window.scrollX,
+          y = window.scrollY;
+
+        const f = () => {
+          setTimeout(() => window.scrollTo(x, y), 1);
+          tabLink.removeEventListener("focus", f);
+        };
+
+        tabLink.addEventListener("focus", f);
+        HTMLElement.prototype.focus.apply(this, arguments);
+      };
+    });
+  }
+
+  const animateLoader = (duration) => {
+    console.log("animateLoader function called with duration:", duration);
+    const screenWidth = window.innerWidth;
+    if (screenWidth < 480) {
+      tween = gsap.fromTo(
+        loaders[activeIndex],
+        { width: "0%" },
+        { width: "100%", duration: duration, ease: "none" }
+      );
+    } else {
+      tween = gsap.fromTo(
+        loaders[activeIndex],
+        { height: "0%" },
+        { height: "100%", duration: duration, ease: "none" }
+      );
+    }
+  };
+
+  const autoPlayTabs = () => {
+    console.log("autoPlayTabs function called");
+    clearTimeout(timeout);
+
+    const duration = 6; // Fixed duration for tab rotation
+    if (tween) {
+      tween.progress(0);
+      tween.kill();
+    }
+
+    if (loaders.length > 0) {
+      animateLoader(duration);
+    }
+
+    timeout = setTimeout(() => {
+      let nextIndex = (activeIndex + 1) % tabsMenu.childElementCount;
+      const nextTab = tabsMenu.childNodes[nextIndex];
+      console.log(`Switching to tab index: ${nextIndex}`); // Log the next tab index being activated
+      nextTab.click();
+    }, duration * 1000);
+  };
+
+  autoPlayTabs();
+
+  // Options for the observer (which mutations to observe)
+  const config = {
+    attributes: true,
+    subtree: true,
+    attributeFilter: ["class"],
+  };
+
+  // Callback function to execute when mutations are observed
+  const mutationCallback = (mutationList, mutationObserver) => {
+    console.log("MutationObserver callback called");
+    for (const mutation of mutationList) {
+      if (mutation.type === "attributes") {
+        const target = mutation.target;
+        if (target.classList.contains(ACTIVE_TAB)) {
+          activeIndex = parseInt(target.id.slice(-1), 10);
+          console.log({ activeIndex });
+          autoPlayTabs();
+        }
+      }
+    }
+  };
+
+  // Create an observer instance linked to the callback function
+  const mutationObserver = new MutationObserver(mutationCallback);
+
+  // Start observing the target node for configured mutations
+  mutationObserver.observe(tabsComponent, config);
+};
+
+// Function to observe when the element with attribute [wb-data='tabs'] is in view
+let stopExecution = false;
+let intersectionObserver = null;
+
+const observeTabRotationWrap = () => {
+  console.log("observeTabRotationWrap function called");
+
+  const tabRotationWrap = document.querySelector("[wb-data='tabs']");
+  if (!tabRotationWrap) return;
+
+  intersectionObserver = new IntersectionObserver((entries) => {
+    console.log("IntersectionObserver callback called");
+
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        console.log("Element is intersecting, calling init");
+        init(); // Call init when the element is in view
+        intersectionObserver.disconnect(); // Stop observing after init is called
+      }
+    });
+  });
+
+  intersectionObserver.observe(tabRotationWrap);
+};
+
+// Call observeTabRotationWrap to start observing
+observeTabRotationWrap();
