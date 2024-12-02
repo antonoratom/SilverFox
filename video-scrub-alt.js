@@ -9,7 +9,7 @@ let tl = gsap.timeline({
     start: "top top",
     end: "50% top",
     scrub: true,
-    markers: true,
+    // markers: true,
   },
 });
 
