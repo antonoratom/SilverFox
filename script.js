@@ -1,56 +1,54 @@
 // HOME PAGE //
 // LOGO RANDOMIZER
-document.addEventListener("DOMContentLoaded", () => {
-  const images = Array.from(
-    document.querySelectorAll(".home-hero-logos_cli img")
+const images = Array.from(
+  document.querySelectorAll(".home-hero-logos_cli.w-dyn-item img")
+);
+const gridItems = Array.from(document.querySelectorAll(".hero-grid-item"));
+
+const numberOfImagesToUse = Math.min(images.length, gridItems.length);
+const shuffledImages = shuffleArray(images);
+
+for (let i = 0; i < numberOfImagesToUse; i++) {
+  const gridItem = gridItems[i];
+  const image = shuffledImages[i];
+
+  const imgElement = document.createElement("img");
+  imgElement.src = image.src;
+  imgElement.setAttribute(
+    "data-unique-number",
+    image.getAttribute("data-unique-number")
   );
-  const gridItems = Array.from(document.querySelectorAll(".hero-grid-item"));
 
-  const numberOfImagesToUse = Math.min(images.length, gridItems.length);
-  const shuffledImages = shuffleArray(images);
+  gridItem.appendChild(imgElement);
+}
 
-  for (let i = 0; i < numberOfImagesToUse; i++) {
-    const gridItem = gridItems[i];
-    const image = shuffledImages[i];
+// Function to update a random grid item every 3 seconds
+setInterval(() => {
+  const randomIndex = Math.floor(Math.random() * gridItems.length);
+  const gridItem = gridItems[randomIndex];
+  const currentImage = gridItem.querySelector("img");
 
-    const imgElement = document.createElement("img");
-    imgElement.src = image.src;
-    imgElement.setAttribute(
-      "data-unique-number",
-      image.getAttribute("data-unique-number")
-    );
+  if (currentImage) {
+    currentImage.classList.add("fade-out");
 
-    gridItem.appendChild(imgElement);
+    setTimeout(() => {
+      gridItem.removeChild(currentImage);
+
+      const newImage = getRandomImage(
+        shuffledImages,
+        currentImage.getAttribute("data-unique-number")
+      );
+
+      const newImgElement = document.createElement("img");
+      newImgElement.src = newImage.src;
+      newImgElement.setAttribute(
+        "data-unique-number",
+        newImage.getAttribute("data-unique-number")
+      );
+      gridItem.appendChild(newImgElement);
+    }, 500);
   }
-
-  // Function to update a random grid item every 3 seconds
-  setInterval(() => {
-    const randomIndex = Math.floor(Math.random() * gridItems.length);
-    const gridItem = gridItems[randomIndex];
-    const currentImage = gridItem.querySelector("img");
-
-    if (currentImage) {
-      currentImage.classList.add("fade-out");
-
-      setTimeout(() => {
-        gridItem.removeChild(currentImage);
-
-        const newImage = getRandomImage(
-          shuffledImages,
-          currentImage.getAttribute("data-unique-number")
-        );
-
-        const newImgElement = document.createElement("img");
-        newImgElement.src = newImage.src;
-        newImgElement.setAttribute(
-          "data-unique-number",
-          newImage.getAttribute("data-unique-number")
-        );
-        gridItem.appendChild(newImgElement);
-      }, 500);
-    }
-  }, 3000);
-});
+}, 3000);
 
 // Function to shuffle an array
 function shuffleArray(array) {
@@ -69,9 +67,11 @@ function getRandomImage(images, currentUniqueNumber) {
   } while (newImage.getAttribute("data-unique-number") === currentUniqueNumber);
   return newImage;
 }
+
 // END OF LOGO RANDOMIZER
 
 // PATH ANIMATION
+
 function responsiveScrubPath() {
   // Define common active and inactive animation states
   const activeAnimation = {
@@ -130,7 +130,7 @@ function responsiveScrubPath() {
         trigger: ".scrubbing-path_wrap",
         start: "15% 70%",
         end: "130% 70%",
-        scrub: true,
+        scrub: 0.001,
         // markers: true,
       },
     });
@@ -138,34 +138,34 @@ function responsiveScrubPath() {
     // Define your threshold values and corresponding pathWraps
     const thresholds = [
       {
-        value: 3244,
+        value: 3174,
         elements: [firstDot, firstDotShadow, firstDotH, firstDotP],
       },
       {
-        value: 2764,
+        value: 2697,
         elements: [secondDot, secondDotShadow, secondDotH, secondDotP],
       },
       {
-        value: 2296,
+        value: 2213,
         elements: [thirdDot, thirdDotShadow, thirdDotH, thirdDotP],
       },
       {
-        value: 986,
+        value: 916,
         elements: [fourthDot, fourthDotShadow, fourthDotH, fourthDotP],
       },
       {
-        value: 438,
+        value: 370,
         elements: [fifthDot, fifthDotShadow, fifthDotH, fifthDotP],
       },
     ];
 
-    // Animate the path with reversed direction
     pathTl.fromTo(
       path,
       { strokeDashoffset: totalLength },
       {
         strokeDashoffset: 0,
-        duration: 3,
+        // duration: 5,
+        // ease: "power1.inOut",
         onUpdate: function () {
           let currentOffset = gsap.getProperty(path, "strokeDashoffset");
           // Function to trigger animations

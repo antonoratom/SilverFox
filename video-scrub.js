@@ -1,9 +1,10 @@
+//VIDEO SCRUB OLD
 const video = document.querySelector(".video-background");
 const stickyElement = document.querySelector(".hero-sticky_fg-2"); // Select the sticky element
 let src = video.currentSrc || video.src;
 
 if (window.innerWidth > 991) {
-  console.log(video, src);
+  // console.log(video, src);
 
   /* Make sure the video is 'activated' on iOS */
   function once(el, event, fn, opts) {
