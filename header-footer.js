@@ -1,3 +1,5 @@
+console.log("test text");
+
 const headerCtaWrap = document.querySelector(".header-main-cta_wrap");
 
 if (window.innerWidth > 991) {
@@ -46,7 +48,7 @@ window.addEventListener("scroll", () => {
 const headerBgColor = document.querySelector(".header-bg");
 const headerLogo = document.querySelector(".header-logo_link");
 const headerCta = document.querySelector(".section.for-header .btn");
-const headerLinks = document.querySelectorAll(".header-link_item");
+const headerLinks = document.querySelectorAll("[header-link_item]");
 const headerBurgerIcon = document.querySelectorAll(".burger-line");
 const headerDropdownToggle = document.querySelector(".header-dropdown_toggle");
 // Function to add the class
@@ -127,23 +129,4 @@ const resizeObserver = new ResizeObserver(() => {
       headerBgWrapNew.style.opacity = "";
     }
   }
-});
-
-// Start observing the headerLinksWrap element
-resizeObserver.observe(headerLinksWrap);
-
-document.addEventListener("mousemove", (event) => {
-  const mouseX = event.clientX; // Get the mouse X position
-  const windowWidth = window.innerWidth; // Get the width of the window
-
-  // Calculate the percentage of the mouse X position
-  const percentageX = mouseX / windowWidth; // This will range from 0 to 1
-
-  // Calculate the mask position based on the mouse X position
-  // Scale from -200 to 200 based on percentageX
-  const maskPositionX = percentageX * 400 - 200; // Scale to fit the desired range
-
-  // Set the new mask position
-  const footerLogo = document.querySelector(".footer-big-logo_secondary");
-  footerLogo.style.webkitMaskPosition = `${maskPositionX}% 50%`;
 });

@@ -48,3 +48,58 @@ const swiperCases = new Swiper(".case-clw", {
     clickable: true,
   },
 });
+
+const infinityLogosFirst = new Swiper("#companies-first-line", {
+  speed: 3500,
+  loop: true,
+  slidesPerView: "auto",
+  autoplay: {
+    delay: 0.5,
+    reverseDirection: true,
+  },
+  breakpoints: {
+    0: {
+      spaceBetween: 16,
+    },
+    992: {
+      spaceBetween: 24,
+    },
+  },
+});
+
+const infinityLogosSecond = new Swiper("#companies-second-line", {
+  speed: 3500,
+  loop: true,
+  slidesPerView: "auto",
+  slidesOffsetBefore: 48,
+  autoplay: {
+    delay: 0.5,
+    reverseDirection: true,
+  },
+  breakpoints: {
+    0: {
+      spaceBetween: 16,
+    },
+    992: {
+      spaceBetween: 24,
+    },
+  },
+});
+const infinityLogosThird = new Swiper("#companies-third-line", {
+  speed: 3500,
+  loop: true,
+  slidesPerView: "auto",
+  slidesOffsetBefore: 24,
+  autoplay: {
+    delay: 0.5,
+    reverseDirection: true,
+  },
+  breakpoints: {
+    0: {
+      spaceBetween: 16,
+    },
+    992: {
+      spaceBetween: 24,
+    },
+  },
+});

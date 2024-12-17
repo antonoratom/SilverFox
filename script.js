@@ -1,74 +1,74 @@
 // HOME PAGE //
-// LOGO RANDOMIZER
-const images = Array.from(
-  document.querySelectorAll(".home-hero-logos_cli.w-dyn-item img")
-);
-const gridItems = Array.from(document.querySelectorAll(".hero-grid-item"));
+// // LOGO RANDOMIZER
+// const images = Array.from(
+//   document.querySelectorAll(".home-hero-logos_cli.w-dyn-item img")
+// );
+// const gridItems = Array.from(document.querySelectorAll(".hero-grid-item"));
 
-const numberOfImagesToUse = Math.min(images.length, gridItems.length);
-const shuffledImages = shuffleArray(images);
+// const numberOfImagesToUse = Math.min(images.length, gridItems.length);
+// const shuffledImages = shuffleArray(images);
 
-for (let i = 0; i < numberOfImagesToUse; i++) {
-  const gridItem = gridItems[i];
-  const image = shuffledImages[i];
+// for (let i = 0; i < numberOfImagesToUse; i++) {
+//   const gridItem = gridItems[i];
+//   const image = shuffledImages[i];
 
-  const imgElement = document.createElement("img");
-  imgElement.src = image.src;
-  imgElement.setAttribute(
-    "data-unique-number",
-    image.getAttribute("data-unique-number")
-  );
+//   const imgElement = document.createElement("img");
+//   imgElement.src = image.src;
+//   imgElement.setAttribute(
+//     "data-unique-number",
+//     image.getAttribute("data-unique-number")
+//   );
 
-  gridItem.appendChild(imgElement);
-}
+//   gridItem.appendChild(imgElement);
+// }
 
-// Function to update a random grid item every 3 seconds
-setInterval(() => {
-  const randomIndex = Math.floor(Math.random() * gridItems.length);
-  const gridItem = gridItems[randomIndex];
-  const currentImage = gridItem.querySelector("img");
+// // Function to update a random grid item every 3 seconds
+// setInterval(() => {
+//   const randomIndex = Math.floor(Math.random() * gridItems.length);
+//   const gridItem = gridItems[randomIndex];
+//   const currentImage = gridItem.querySelector("img");
 
-  if (currentImage) {
-    currentImage.classList.add("fade-out");
+//   if (currentImage) {
+//     currentImage.classList.add("fade-out");
 
-    setTimeout(() => {
-      gridItem.removeChild(currentImage);
+//     setTimeout(() => {
+//       gridItem.removeChild(currentImage);
 
-      const newImage = getRandomImage(
-        shuffledImages,
-        currentImage.getAttribute("data-unique-number")
-      );
+//       const newImage = getRandomImage(
+//         shuffledImages,
+//         currentImage.getAttribute("data-unique-number")
+//       );
 
-      const newImgElement = document.createElement("img");
-      newImgElement.src = newImage.src;
-      newImgElement.setAttribute(
-        "data-unique-number",
-        newImage.getAttribute("data-unique-number")
-      );
-      gridItem.appendChild(newImgElement);
-    }, 500);
-  }
-}, 3000);
+//       const newImgElement = document.createElement("img");
+//       newImgElement.src = newImage.src;
+//       newImgElement.setAttribute(
+//         "data-unique-number",
+//         newImage.getAttribute("data-unique-number")
+//       );
+//       gridItem.appendChild(newImgElement);
+//     }, 500);
+//   }
+// }, 3000);
 
-// Function to shuffle an array
-function shuffleArray(array) {
-  for (let i = array.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [array[i], array[j]] = [array[j], array[i]];
-  }
-  return array;
-}
+// // Function to shuffle an array
+// function shuffleArray(array) {
+//   for (let i = array.length - 1; i > 0; i--) {
+//     const j = Math.floor(Math.random() * (i + 1));
+//     [array[i], array[j]] = [array[j], array[i]];
+//   }
+//   return array;
+// }
 
-// Function to get a random image that is not the same as the current image
-function getRandomImage(images, currentUniqueNumber) {
-  let newImage;
-  do {
-    newImage = images[Math.floor(Math.random() * images.length)];
-  } while (newImage.getAttribute("data-unique-number") === currentUniqueNumber);
-  return newImage;
-}
+// // Function to get a random image that is not the same as the current image
+// function getRandomImage(images, currentUniqueNumber) {
+//   let newImage;
+//   do {
+//     newImage = images[Math.floor(Math.random() * images.length)];
+//   } while (newImage.getAttribute("data-unique-number") === currentUniqueNumber);
+//   return newImage;
+// }
 
-// END OF LOGO RANDOMIZER
+// // END OF LOGO RANDOMIZER
 
 // PATH ANIMATION
 
