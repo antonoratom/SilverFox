@@ -1,4 +1,4 @@
-console.log("test text");
+console.log("local codes");
 
 const headerCtaWrap = document.querySelector(".header-main-cta_wrap");
 
@@ -117,7 +117,7 @@ window.addEventListener("scroll", () => {
 const headerLinksWrap = document.querySelector(".col.header-links_wrap");
 const headerBgWrapNew = document.querySelector(".header-bg_wrap");
 
-// Create a ResizeObserver to observe changes in size
+//in size
 const resizeObserver = new ResizeObserver(() => {
   // Get the height of the headerLinksWrap
   const height = headerLinksWrap.offsetHeight;
@@ -129,4 +129,20 @@ const resizeObserver = new ResizeObserver(() => {
       headerBgWrapNew.style.opacity = "";
     }
   }
+});
+
+document.addEventListener("mousemove", (event) => {
+  const mouseX = event.clientX; // Get the mouse X position
+  const windowWidth = window.innerWidth; // Get the width of the window
+
+  // Calculate the percentage of the mouse X position
+  const percentageX = mouseX / windowWidth; // This will range from 0 to 1
+
+  // Calculate the mask position based on the mouse X position
+  // Scale from -200 to 200 based on percentageX
+  const maskPositionX = percentageX * 400 - 200; // Scale to fit the desired range
+
+  // Set the new mask position
+  const footerLogo = document.querySelector(".footer-big-logo_secondary");
+  footerLogo.style.webkitMaskPosition = `${maskPositionX}% 50%`;
 });
