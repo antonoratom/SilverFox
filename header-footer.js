@@ -105,31 +105,33 @@ $("[light-section]").each(function () {
 
 // Function to handle scroll event
 const headerBgWrap = document.querySelector(".header-bg_wrap");
-window.addEventListener("scroll", () => {
-  if (window.scrollY > 100) {
-    headerBgWrap.style.opacity = "1"; // 100% opacity
-  } else {
-    headerBgWrap.style.opacity = "0"; // or set to your desired opacity
-  }
-});
-
-// Select the elements
-const headerLinksWrap = document.querySelector(".col.header-links_wrap");
-const headerBgWrapNew = document.querySelector(".header-bg_wrap");
-
-//in size
-const resizeObserver = new ResizeObserver(() => {
-  // Get the height of the headerLinksWrap
-  const height = headerLinksWrap.offsetHeight;
-
-  if (window.innerWidth < 991) {
-    if (height > 0) {
-      headerBgWrapNew.style.opacity = "1";
+if (window.innerWidth > 991) {
+  window.addEventListener("scroll", () => {
+    if (window.scrollY > 100) {
+      headerBgWrap.style.opacity = "1"; // 100% opacity
     } else {
-      headerBgWrapNew.style.opacity = "";
+      headerBgWrap.style.opacity = "0"; // or set to your desired opacity
     }
-  }
-});
+  });
+}
+
+// // Select the elements
+// const headerLinksWrap = document.querySelector(".col.header-links_wrap");
+// const headerBgWrapNew = document.querySelector(".header-bg_wrap");
+
+// //in size
+// const resizeObserver = new ResizeObserver(() => {
+//   // Get the height of the headerLinksWrap
+//   const height = headerLinksWrap.offsetHeight;
+
+//   if (window.innerWidth < 991) {
+//     if (height > 0) {
+//       headerBgWrapNew.style.opacity = "1";
+//     } else {
+//       headerBgWrapNew.style.opacity = "";
+//     }
+//   }
+// });
 
 document.addEventListener("mousemove", (event) => {
   const mouseX = event.clientX; // Get the mouse X position
