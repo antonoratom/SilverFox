@@ -116,46 +116,36 @@ function responsiveScrubPath() {
     let fourthDotH = document.querySelector("#fourthDotText h5");
     let fourthDotP = document.querySelector("#fourthDotText p");
 
-    let fifthDot = document.getElementById("fifthDot");
-    let fifthDotShadow = document.getElementById("fifthDotShadow");
-    let fifthDotH = document.querySelector("#fifthDotText h5");
-    let fifthDotP = document.querySelector("#fifthDotText p");
-    let totalLength = path.getTotalLength(); // Get the total length of the path
+    let totalLength = path.getTotalLength();
 
-    // Set the initial strokeDasharray
     gsap.set(path, { strokeDasharray: totalLength });
-    // Create a GSAP timeline for the animation
+
     let pathTl = gsap.timeline({
       scrollTrigger: {
         trigger: ".scrubbing-path_wrap",
-        start: "15% 70%",
+        start: "7% 70%",
         end: "130% 70%",
         scrub: 0.001,
         // markers: true,
       },
     });
 
-    // Define your threshold values and corresponding pathWraps
     const thresholds = [
       {
-        value: 3174,
+        value: 2697,
         elements: [firstDot, firstDotShadow, firstDotH, firstDotP],
       },
       {
-        value: 2697,
+        value: 2173,
         elements: [secondDot, secondDotShadow, secondDotH, secondDotP],
       },
       {
-        value: 2213,
+        value: 967,
         elements: [thirdDot, thirdDotShadow, thirdDotH, thirdDotP],
       },
       {
-        value: 916,
+        value: 475,
         elements: [fourthDot, fourthDotShadow, fourthDotH, fourthDotP],
-      },
-      {
-        value: 370,
-        elements: [fifthDot, fifthDotShadow, fifthDotH, fifthDotP],
       },
     ];
 
@@ -164,11 +154,9 @@ function responsiveScrubPath() {
       { strokeDashoffset: totalLength },
       {
         strokeDashoffset: 0,
-        // duration: 5,
-        // ease: "power1.inOut",
         onUpdate: function () {
           let currentOffset = gsap.getProperty(path, "strokeDashoffset");
-          // Function to trigger animations
+
           function triggerAnimations(elements, isActive) {
             const animation = isActive ? inactiveAnimation : activeAnimation;
 
@@ -192,10 +180,8 @@ function responsiveScrubPath() {
             });
           }
 
-          // Loop through the thresholds to determine which animations to trigger
           thresholds.forEach((threshold) => {
             const isActive = currentOffset >= threshold.value;
-            // Trigger animations for the corresponding pathWrap
             triggerAnimations(threshold.elements, isActive);
           });
         },
@@ -222,18 +208,11 @@ function responsiveScrubPath() {
     let fourthDotH = document.querySelector("#fourthDotText h5");
     let fourthDotP = document.querySelector("#fourthDotText p");
 
-    let fifthDot = document.getElementById("fifthMobDot");
-    let fifthDotShadow = document.getElementById("fifthMobDotShadow");
-    let fifthDotH = document.querySelector("#fifthDotText h5");
-    let fifthDotP = document.querySelector("#fifthDotText p");
-
-    // console.log(thirdDot.id);
-
     let path = document.querySelector(".mobile-path_line");
     let totalHeight = parseFloat(
       window.getComputedStyle(path.parentElement).height
     );
-    // Define your threshold values and corresponding elements
+
     const thresholds = [
       {
         value: 7,
@@ -251,25 +230,18 @@ function responsiveScrubPath() {
         value: 59.5,
         elements: [fourthDot, fourthDotShadow, fourthDotH, fourthDotP],
       },
-      {
-        value: 77,
-        elements: [fifthDot, fifthDotShadow, fifthDotH, fifthDotP],
-      },
     ];
 
-    // Animate the path based on height
     let pathTl = gsap.timeline({
       scrollTrigger: {
         trigger: ".pains-items_block",
         start: "0% 80%",
         end: "110% 80%",
         scrub: true,
-        // markers: true,
         onUpdate: function () {
           let currentHeight = parseFloat(window.getComputedStyle(path).height);
           let heightPercentage = (currentHeight / totalHeight) * 100;
 
-          // Function to trigger animations
           function triggerAnimations(elements, isActive) {
             const animation = isActive ? activeAnimation : inactiveAnimation;
 
@@ -293,10 +265,8 @@ function responsiveScrubPath() {
             });
           }
 
-          // Loop through the thresholds to determine which animations to trigger
           thresholds.forEach((threshold) => {
             const isActive = heightPercentage >= threshold.value;
-            // Trigger animations for the corresponding elements
             triggerAnimations(threshold.elements, isActive);
           });
         },

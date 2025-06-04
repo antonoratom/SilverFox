@@ -36,7 +36,7 @@ const swiperFeedbacks = new Swiper(".feedacks-xs-clw", {
 const swiperCases = new Swiper(".case-clw", {
   // Optional parameters
   slidesPerView: 1,
-  spaceBetween: 24,
+  spaceBetween: 0,
 
   // Navigation arrows
   navigation: {
@@ -50,12 +50,12 @@ const swiperCases = new Swiper(".case-clw", {
 });
 
 const infinityLogosFirst = new Swiper("#companies-first-line", {
-  speed: 3500,
+  speed: 4500,
   loop: true,
-  slidesPerView: "auto",
+  slidesPerView: 6,
   autoplay: {
     delay: 0.5,
-    reverseDirection: true,
+    reverseDirection: false,
   },
   breakpoints: {
     0: {
@@ -68,13 +68,13 @@ const infinityLogosFirst = new Swiper("#companies-first-line", {
 });
 
 const infinityLogosSecond = new Swiper("#companies-second-line", {
-  speed: 3500,
+  speed: 2500,
   loop: true,
-  slidesPerView: "auto",
+  slidesPerView: 6,
   slidesOffsetBefore: 48,
   autoplay: {
     delay: 0.5,
-    reverseDirection: true,
+    reverseDirection: false,
   },
   breakpoints: {
     0: {

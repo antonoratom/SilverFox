@@ -1,6 +1,6 @@
-console.log("local codes");
+console.log("local codes for now ");
 
-const headerCtaWrap = document.querySelector(".header-main-cta_wrap");
+// const headerCtaWrap = document.querySelector(".header-main-cta_wrap");
 
 if (window.innerWidth > 991) {
   // headerCtaWrap.style.maxWidth = "0%";
@@ -30,32 +30,32 @@ if (window.innerWidth > 991) {
   });
 }
 
-window.addEventListener("scroll", () => {
-  // Check if the screen width is greater than 991 pixels
-  if (window.innerWidth > 991) {
-    // headerCtaWrap.style.maxWidth = "0%";
-    if (window.scrollY > 100) {
-      headerCtaWrap.style.maxWidth = "100%"; // 100% opacity
-    } else {
-      headerCtaWrap.style.maxWidth = "0%"; // or set to your desired opacity
-    }
-  } else {
-    // Optionally, reset the style if the screen is smaller than 991px
-    headerCtaWrap.style.maxWidth = "100%"; // Resets to default or hides the element
-  }
-});
+// window.addEventListener("scroll", () => {
+//   // Check if the screen width is greater than 991 pixels
+//   if (window.innerWidth > 991) {
+//     // headerCtaWrap.style.maxWidth = "0%";
+//     if (window.scrollY > 100) {
+//       headerCtaWrap.style.maxWidth = "100%"; // 100% opacity
+//     } else {
+//       headerCtaWrap.style.maxWidth = "0%"; // or set to your desired opacity
+//     }
+//   } else {
+//     // Optionally, reset the style if the screen is smaller than 991px
+//     headerCtaWrap.style.maxWidth = "100%"; // Resets to default or hides the element
+//   }
+// });
 
 const headerBgColor = document.querySelector(".header-bg");
 const headerLogo = document.querySelector(".header-logo_link");
 const headerCta = document.querySelector(".section.for-header .btn");
 const headerLinks = document.querySelectorAll("[header-link_item]");
 const headerBurgerIcon = document.querySelectorAll(".burger-line");
-const headerDropdownToggle = document.querySelector(".header-dropdown_toggle");
+// const headerDropdownToggle = document.querySelector(".header-dropdown_toggle");
 // Function to add the class
 function addLightClass() {
   headerLogo.classList.add("u-color-light");
   headerCta.classList.add("cc-light");
-  headerDropdownToggle.classList.add("u-color-light");
+  // headerDropdownToggle.classList.add("u-color-light");
   headerBurgerIcon.forEach((line) => {
     // line.classList.add("u-bg-light");
     line.style.setProperty(
@@ -74,7 +74,7 @@ function addLightClass() {
 function removeLightClass() {
   headerLogo.classList.remove("u-color-light");
   headerCta.classList.remove("cc-light");
-  headerDropdownToggle.classList.remove("u-color-light");
+  // headerDropdownToggle.classList.remove("u-color-light");
   headerBurgerIcon.forEach((line) => {
     // line.classList.remove("u-bg-light");
     line.style.removeProperty(

@@ -1,11 +1,10 @@
-//AUTOROTATE TABS
+// AUTOROTATE TABS
 const init = () => {
-  // console.log("init function called");
-
   const ACTIVE_TAB = "w--current";
   let activeIndex = 0;
   let timeout;
   let tween;
+  let isPaused = false; // Flag to check if the rotation is paused
 
   // Select the node that will be observed for mutations
   const tabsComponent = document.querySelector('[wb-data="tabs"]');
@@ -36,7 +35,6 @@ const init = () => {
   }
 
   const animateLoader = (duration) => {
-    // console.log("animateLoader function called with duration:", duration);
     const screenWidth = window.innerWidth;
     if (screenWidth < 280) {
       tween = gsap.fromTo(
@@ -54,24 +52,31 @@ const init = () => {
   };
 
   const autoPlayTabs = () => {
-    // console.log("autoPlayTabs function called");
     clearTimeout(timeout);
 
-    const duration = 6; // Fixed duration for tab rotation
+    const duration = 12; // Fixed duration for tab rotation
     if (tween) {
-      tween.progress(0);
-      tween.kill();
+      tween.kill(); // Kill the existing tween to reset it
     }
 
     if (loaders.length > 0) {
+      // Reset the height of all loaders except the active one
+      loaders.forEach((loader, index) => {
+        if (index !== activeIndex) {
+          gsap.set(loader, { height: "0%" });
+        }
+      });
+
       animateLoader(duration);
     }
 
     timeout = setTimeout(() => {
-      let nextIndex = (activeIndex + 1) % tabsMenu.childElementCount;
-      const nextTab = tabsMenu.childNodes[nextIndex];
-      // console.log(`Switching to tab index: ${nextIndex}`); // Log the next tab index being activated
-      nextTab.click();
+      if (!isPaused) {
+        // Only switch tabs if not paused
+        let nextIndex = (activeIndex + 1) % tabsMenu.childElementCount;
+        const nextTab = tabsMenu.childNodes[nextIndex];
+        nextTab.click();
+      }
     }, duration * 1000);
   };
 
@@ -86,14 +91,12 @@ const init = () => {
 
   // Callback function to execute when mutations are observed
   const mutationCallback = (mutationList, mutationObserver) => {
-    // console.log("MutationObserver callback called");
     for (const mutation of mutationList) {
       if (mutation.type === "attributes") {
         const target = mutation.target;
         if (target.classList.contains(ACTIVE_TAB)) {
           activeIndex = parseInt(target.id.slice(-1), 10);
-          // console.log({ activeIndex });
-          autoPlayTabs();
+          autoPlayTabs(); // Restart autoplay on tab change
         }
       }
     }
@@ -104,6 +107,30 @@ const init = () => {
 
   // Start observing the target node for configured mutations
   mutationObserver.observe(tabsComponent, config);
+
+  // Add event listeners for hover to pause and resume
+  tabsComponent.addEventListener("mouseenter", () => {
+    isPaused = true;
+    clearTimeout(timeout);
+    if (tween) {
+      tween.pause();
+    }
+  });
+
+  tabsComponent.addEventListener("mouseleave", () => {
+    isPaused = false;
+    if (tween) {
+      tween.resume();
+    }
+    timeout = setTimeout(() => {
+      if (!isPaused) {
+        // Only switch tabs if not paused
+        let nextIndex = (activeIndex + 1) % tabsMenu.childElementCount;
+        const nextTab = tabsMenu.childNodes[nextIndex];
+        nextTab.click();
+      }
+    }, (1 - tween.progress()) * 12000); // Resume from the current progress
+  });
 };
 
 // Function to observe when the element with attribute [wb-data='tabs'] is in view
@@ -111,17 +138,12 @@ let stopExecution = false;
 let intersectionObserver = null;
 
 const observeTabRotationWrap = () => {
-  // console.log("observeTabRotationWrap function called");
-
   const tabRotationWrap = document.querySelector("[wb-data='tabs']");
   if (!tabRotationWrap) return;
 
   intersectionObserver = new IntersectionObserver((entries) => {
-    // console.log("IntersectionObserver callback called");
-
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
-        // console.log("Element is intersecting, calling init");
         init(); // Call init when the element is in view
         intersectionObserver.disconnect(); // Stop observing after init is called
       }
@@ -134,4 +156,4 @@ const observeTabRotationWrap = () => {
 // Call observeTabRotationWrap to start observing
 observeTabRotationWrap();
 
-//END OF AUTOROTATE TABS
+// END OF AUTOROTATE TABS
