@@ -111,6 +111,39 @@ $('[motion-wrap="with-stagger"]').each(function (index) {
   createScrollTrigger(tl, $(this));
 });
 
+// Select the trigger and target elements
+const logosTrigger = document.querySelector("[for-logos='trigger']");
+const logosTarget = document.querySelector("[for-logos='target']");
+gsap.fromTo(
+  logosTarget,
+  { y: "-60vh", scale: 0.7 },
+  {
+    y: 0,
+    scale: 1,
+    scrollTrigger: {
+      trigger: logosTrigger,
+      start: "50% 50%",
+      end: "140% 50%",
+      scrub: true,
+      // markers: true,
+    },
+  }
+);
+
+const splitTextElement = document.querySelector("[for-split-text]");
+const splitText = new SplitText(splitTextElement, { type: "words,chars" });
+gsap.from(splitText.chars, {
+  opacity: 0.1,
+  stagger: 0.05,
+  scrollTrigger: {
+    trigger: logosTrigger,
+    start: "90% 50%",
+    end: "110% 50%",
+    scrub: true,
+    // markers: true,
+  },
+});
+
 // //PROGRAMMATIC — Why section
 // $('[motion-wrap="programmatic-why"]').each(function (index) {
 //   let tl = gsap.timeline({ paused: true });
@@ -242,3 +275,5 @@ $('[motion-wrap="with-stagger"]').each(function (index) {
 //   );
 //   createScrollTrigger(tl, $(this));
 // });
+
+

@@ -76,3 +76,27 @@
 //     }
 //   }, 1000);
 // }
+
+//FOR VIDEO CONTROLS
+document.querySelector(".play-btn").addEventListener("click", function () {
+  const video = document.getElementById("videoPlayer");
+  const playButton = document.querySelector(".play-btn");
+  
+  video.currentTime = 0;
+  video.muted = false;
+  video.controls = true;
+  video.play();
+  playButton.style.display = "none";
+
+  // Create an IntersectionObserver to pause the video when it scrolls out of view
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) {
+        video.pause(); // Pause the video when it's out of view
+      }
+    });
+  });
+
+  // Start observing the video element
+  observer.observe(video);
+});
